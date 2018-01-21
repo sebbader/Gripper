@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>edu.kit.aifb.step</groupId>
+    <artifactId>gripper</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>gripper-web</artifactId>
+  <name>gripper-web</name>
+  <url>http://maven.apache.org</url>
+  
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<jetty.version>9.3.7.v20160115</jetty.version>
+
+		<nxparser.group>com.github.sebbader.nxparser</nxparser.group>
+		<nxparser.version>e7da345297</nxparser.version>
+	</properties>
+
+
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://www.jitpack.io</url>
+		</repository>
+	</repositories>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>1.7.12</version>
+		</dependency>
+		<dependency>
+			<groupId>${nxparser.group}</groupId>
+			<artifactId>nxparser-jax-rs</artifactId>
+			<version>${nxparser.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>${nxparser.group}</groupId>
+			<artifactId>nxparser-utilities-nx</artifactId>
+			<version>${nxparser.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-discovery/commons-discovery -->
+		<dependency>
+			<groupId>commons-discovery</groupId>
+			<artifactId>commons-discovery</artifactId>
+			<version>0.5</version>
+		</dependency>
+
+
+		<dependency>
+			<!-- only for its CORS filter: -->
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>${jetty.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-continuation</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-io</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-http</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jaxrs</artifactId>
+			<version>1.5.16</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.ws.rs</groupId>
+					<artifactId>jsr311-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		
+		
+		<dependency>
+			<groupId>${parent.groupId}</groupId>
+			<artifactId>gripper-backend</artifactId>
+			<version>${parent.version}</version>
+		</dependency>
+
+  </dependencies>
+  
+  
+  
+	<build>
+		<finalName>gripper</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jetty.version}</version>
+				<configuration>
+					<scanIntervalSeconds>3</scanIntervalSeconds>
+					<!-- To log HTTP requests on INFO level: -->
+					<requestLog implementation="org.eclipse.jetty.server.Slf4jRequestLog"></requestLog>
+					<webApp>
+						<contextPath>/gripper</contextPath>
+					</webApp>
+				</configuration>
+				<dependencies>
+					<!-- Such that above logging works: -->
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+						<version>1.6.6</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!-- we annotate instead of using web.xml -->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<!-- <webApp> <contextPath>/visitour</contextPath> </webApp> -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
