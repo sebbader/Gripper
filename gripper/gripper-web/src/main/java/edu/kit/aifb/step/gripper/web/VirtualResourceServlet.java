@@ -27,7 +27,7 @@ import com.google.common.collect.Lists;
 import edu.kit.aifb.step.gripper.backend.GripperController;
 import edu.kit.aifb.step.gripper.web.resources.GripperWebContainer;
 import edu.kit.aifb.step.web.api.WebResource;
-import edu.kit.aifb.step.wrapper.Utils;
+import edu.kit.aifb.step.utils.Utils;
 
 
 

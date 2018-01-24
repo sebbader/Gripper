@@ -18,7 +18,7 @@ import com.google.common.collect.Lists;
 import edu.kit.aifb.step.api.SemanticStateBasedResource;
 import edu.kit.aifb.step.gripper.backend.GripperController;
 import edu.kit.aifb.step.web.api.WebResource;
-import edu.kit.aifb.step.wrapper.Utils;
+import edu.kit.aifb.step.utils.Utils;
 
 public class GripperWebContainer implements WebResource {
 
@@ -58,7 +58,7 @@ public class GripperWebContainer implements WebResource {
 			if (arm != null) graph.add( new Node[] {new Resource(baseUri), LDP.CONTAINS, new Resource(baseUri + "arm/")} );
 			if (claw != null) graph.add( new Node[] {new Resource(baseUri), LDP.CONTAINS, new Resource(baseUri + "claw/")} );
 			
-			return Response.ok().entity( new GenericEntity<Iterable<Node[]>>( graph ) {  } ).variants(Utils.getVariants()).build();
+			return Response.ok().entity( new GenericEntity<Iterable<Node[]>>( graph ) {  } ).build();
 		} catch (RemoteException | NullPointerException e) {
 			e.printStackTrace();
 			return Response.status( Response.Status.INTERNAL_SERVER_ERROR ).entity(e.getMessage()).build();

@@ -16,7 +16,7 @@ import com.google.common.collect.Lists;
 import edu.kit.aifb.step.gripper.backend.GripperController;
 import edu.kit.aifb.step.gripper.backend.MotorController;
 import edu.kit.aifb.step.web.api.WebResource;
-import edu.kit.aifb.step.wrapper.Utils;
+import edu.kit.aifb.step.utils.Utils;
 
 public class MotorWebContainer implements WebResource {
 	
@@ -42,7 +42,7 @@ public class MotorWebContainer implements WebResource {
 			
 			graph.addAll( Lists.newArrayList( controller.readDescription() ) );
 
-			return Response.ok().entity( new GenericEntity<Iterable<Node[]>>( graph ) {  } ).variants(Utils.getVariants()).build();
+			return Response.ok().entity( new GenericEntity<Iterable<Node[]>>( graph ) {  } ).build();
 			
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -82,7 +82,7 @@ public class MotorWebContainer implements WebResource {
 
 	@Override
 	public Response doHead() {
-		return Response.ok().entity( new GenericEntity<Iterable<Node[]>>( controller.readDescription() ) {  } ).variants(Utils.getVariants()).build();
+		return Response.ok().entity( new GenericEntity<Iterable<Node[]>>( controller.readDescription() ) {  } ).build();
 	}
 
 	@Override
