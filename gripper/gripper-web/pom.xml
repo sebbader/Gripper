@@ -153,7 +153,8 @@
 					<!-- To log HTTP requests on INFO level: -->
 					<requestLog implementation="org.eclipse.jetty.server.Slf4jRequestLog"></requestLog>
 					<webApp>
-						<contextPath>/gripper</contextPath>
+						<!-- <contextPath>/gripper</contextPath> -->
+						<contextPath>/</contextPath> 
 					</webApp>
 				</configuration>
 				<dependencies>

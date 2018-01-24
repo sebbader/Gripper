@@ -1,0 +1,20 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix saref: <https://w3id.org/saref#> .
+@prefix parent: <http://aifb.kit.edu/services/bader/container/> .
+@prefix step: <http://people.aifb.kit.edu/mu2771/step/>
+
+CONSTRUCT { 
+
+<#this> rdf:type step:VirtualRepresentation . 
+<#this> step:hasProgram parent:program .
+<#this> step:hasQuery parent:query .
+<#this> saref:hasState <#abrasion> .
+<#abrasion> rdf:value ?abrasion .
+<#abrasion> rdf:type saref:State .
+
+
+} WHERE { 
+
+?s saref:hasState ?abrasion . 
+
+}

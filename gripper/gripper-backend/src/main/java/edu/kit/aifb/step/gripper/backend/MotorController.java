@@ -42,8 +42,8 @@ public class MotorController implements SemanticStateBasedResource {
 	public Iterable<Node[]> read() throws RemoteException {
 		List<Node[]> graph = new ArrayList<Node[]>();
 
-		Resource motorController = new Resource(baseUri + id);
-		graph.add( new Node[] {motorController, RDFS.LABEL, new Literal("id", XSD.STRING)} );
+		Resource motorController = new Resource(baseUri);
+		graph.add( new Node[] {motorController, RDFS.LABEL, new Literal(id, XSD.STRING)} );
 		graph.add( new Node[] {motorController, SAREF.hasState, new Literal(Integer.toString(state), XSD.STRING)} );
 		graph.add( new Node[] {motorController, STEP.numberOfRequests, new Literal(Integer.toString(numberOfActions), XSD.INTEGER)} );
 
@@ -53,9 +53,9 @@ public class MotorController implements SemanticStateBasedResource {
 	public Iterable<Node[]> readDescription() {
 		List<Node[]> graph = new ArrayList<Node[]>();
 
-		Resource motorController = new Resource(baseUri + id);
+		Resource motorController = new Resource(baseUri);
 		graph.add( new Node[] {motorController, RDF.TYPE, new Resource("http://ssn#actuator")} );
-		graph.add( new Node[] {motorController, RDF.TYPE, new Resource("http://step#gripper#motor")} );
+		graph.add( new Node[] {motorController, RDF.TYPE, new Resource("http://people.aifb.kit.edu/mu2771/step#gripper_motor")} );
 
 		return graph;
 	}
@@ -76,11 +76,13 @@ public class MotorController implements SemanticStateBasedResource {
 							move(0, 0, 1);
 							this.state = 1;
 							this.numberOfActions++;
-						} else {
+						} else if (this.state > newState) {
 							// transition from 0 to 1
 							move(0, 0, -1);
 							this.state = 0;
 							this.numberOfActions++;
+						} else {
+							return false;
 						}
 					} catch (NumberFormatException e) {}
 				}

@@ -27,7 +27,7 @@ public class StepServletContextListener implements ServletContextListener {
 		_ctx = sce.getServletContext();
 
 		// Register Servlet
-		ServletRegistration sr = _ctx.addServlet("STEP Wrapper",
+		ServletRegistration sr = _ctx.addServlet("gripper",
 				org.glassfish.jersey.servlet.ServletContainer.class);
 		sr.addMapping("/*");
 		sr.setInitParameter(org.glassfish.jersey.server.ServerProperties.PROVIDER_PACKAGES,
