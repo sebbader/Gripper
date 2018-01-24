@@ -34,17 +34,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>edu.kit.aifb.step</groupId>
-			<artifactId>flswrapper-soap</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<groupId>edu.kit.aifb.step</groupId>
-					<artifactId>StepVocabularies</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+
 
 
 		<dependency>
