@@ -67,7 +67,8 @@ public class MotorController implements SemanticStateBasedResource {
 
 				if (node[1].getLabel().toLowerCase().contains("hasstate")) {
 					try {
-						int newState = Integer.parseInt(node[2].getLabel());
+						
+						int newState = translateState(node[2].getLabel());
 						
 						if (newState != 0 && newState != 1) throw new RemoteException("Only 1 and 0 allowed!");
 						
@@ -97,6 +98,28 @@ public class MotorController implements SemanticStateBasedResource {
 	}
 
 
+
+
+	private int translateState(String label) throws RemoteException {
+		
+		switch (label.toLowerCase()) {
+		case "up":
+			return 1;
+		case "down":
+			return 0;
+		case "closed":
+			return 1;
+		case "opened":
+			return 0;
+		case "1":
+			return 1;
+		case "0":
+			return 0;
+		default:
+			throw new RemoteException("Could not parse desired state.");
+		}
+		
+	}
 
 
 	private void move(int i, int j, int k) {
