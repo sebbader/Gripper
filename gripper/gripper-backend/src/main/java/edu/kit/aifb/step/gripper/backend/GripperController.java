@@ -30,8 +30,12 @@ public class GripperController implements SemanticStateBasedResource {
 	 * @param baseUri
 	 */
 	public GripperController (String id, String baseUri) {
-		this.baseUri = baseUri;
+
 		this.id = id;
+
+		int l = baseUri.split("/").length;
+		for (int i = 0; i < l-1 ; i++) this.baseUri += baseUri.split("/")[i] + "/";
+		this.baseUri += id + "/";
 
 		this.arm = new MotorController("arm", baseUri, 0);
 		this.claw = new MotorController("claw", baseUri, 0);
