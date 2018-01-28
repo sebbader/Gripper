@@ -33,7 +33,11 @@ public class MotorController implements SemanticStateBasedResource {
 	public MotorController(String id, String baseUri, int status) {
 
 		this.id = id;
-		this.baseUri = baseUri;
+
+		int l = baseUri.split("/").length;
+		for (int i = 0; i < l-1 ; i++) this.baseUri += baseUri.split("/")[i] + "/";
+		this.baseUri += id + "/";
+
 		this.state = status;
 		this.numberOfActions = 0;
 	}
@@ -44,11 +48,30 @@ public class MotorController implements SemanticStateBasedResource {
 
 		Resource motorController = new Resource(baseUri);
 		graph.add( new Node[] {motorController, RDFS.LABEL, new Literal(id, XSD.STRING)} );
-		graph.add( new Node[] {motorController, SAREF.hasState, new Literal(Integer.toString(state), XSD.STRING)} );
+		graph.add( new Node[] {motorController, SAREF.hasState, new Literal( readState(), XSD.STRING)} );
 		graph.add( new Node[] {motorController, STEP.numberOfRequests, new Literal(Integer.toString(numberOfActions), XSD.INTEGER)} );
 
 		return graph;
 	}
+
+
+	private String readState() throws RemoteException {
+
+		switch (this.id) {
+		case "arm":
+			if (state == 1) return "up";
+			if (state == 0) return "down";
+			break;
+		case "claw":
+			if (state == 1) return "opened";
+			if (state == 0) return "closed";
+			break;
+		default:
+			throw new RemoteException();
+		}
+		return null;
+	}
+
 
 	public Iterable<Node[]> readDescription() {
 		List<Node[]> graph = new ArrayList<Node[]>();
@@ -67,11 +90,11 @@ public class MotorController implements SemanticStateBasedResource {
 
 				if (node[1].getLabel().toLowerCase().contains("hasstate")) {
 					try {
-						
+
 						int newState = translateState(node[2].getLabel());
-						
+
 						if (newState != 0 && newState != 1) throw new RemoteException("Only 1 and 0 allowed!");
-						
+
 						if (this.state < newState) {
 							// transition from 0 to 1
 							move(0, 0, 1);
@@ -101,7 +124,7 @@ public class MotorController implements SemanticStateBasedResource {
 
 
 	private int translateState(String label) throws RemoteException {
-		
+
 		switch (label.toLowerCase()) {
 		case "up":
 			return 1;
@@ -118,13 +141,13 @@ public class MotorController implements SemanticStateBasedResource {
 		default:
 			throw new RemoteException("Could not parse desired state.");
 		}
-		
+
 	}
 
 
 	private void move(int i, int j, int k) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
