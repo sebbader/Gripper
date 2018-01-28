@@ -84,7 +84,9 @@ public class MotorController implements SemanticStateBasedResource {
 						} else {
 							return false;
 						}
-					} catch (NumberFormatException e) {}
+					} catch (NumberFormatException e) {
+						throw new RemoteException(e.getMessage());
+					}
 				}
 			}
 		} catch (Exception e) {
