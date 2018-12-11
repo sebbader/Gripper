@@ -2,6 +2,7 @@ package edu.kit.aifb.step.gripper.backend;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.cli.MissingArgumentException;
@@ -72,10 +73,15 @@ public class GripperController implements SemanticStateBasedResource {
 		return false;
 	}
 
-	public List<SemanticStateBasedResource> contains() throws RemoteException {
-		List<SemanticStateBasedResource> childs = new ArrayList<SemanticStateBasedResource>();
-		childs.add(arm);
-		childs.add(claw);
+	public List<Resource> contains() throws RemoteException {
+		List<Resource> childs = new ArrayList<Resource>();
+		
+		Iterator<Node[]> iterator = arm.read().iterator();
+		if (iterator.hasNext()) childs.add(new Resource(iterator.next()[0].toString()));
+		
+		iterator = claw.read().iterator();
+		if (iterator.hasNext()) childs.add(new Resource(iterator.next()[0].toString()));
+		
 		return childs;
 	}
 

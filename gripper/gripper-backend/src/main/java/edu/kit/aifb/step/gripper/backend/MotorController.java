@@ -159,8 +159,8 @@ public class MotorController implements SemanticStateBasedResource {
 		throw new RemoteException("Delete not possible!");
 	}
 
-	public List<SemanticStateBasedResource> contains() throws RemoteException {
-		return new ArrayList<SemanticStateBasedResource>() ;
+	public List<Resource> contains() throws RemoteException {
+		return new ArrayList<Resource>() ;
 	}
 
 	public SemanticStateBasedResource retrieve(String id) throws RemoteException {
