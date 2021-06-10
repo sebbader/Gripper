@@ -16,7 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
-		<jetty.version>9.3.7.v20160115</jetty.version>
+		<jetty.version>9.4.41.v20210516</jetty.version>
 
 		<nxparser.group>com.github.sebbader.nxparser</nxparser.group>
 		<nxparser.version>e7da345297</nxparser.version>
